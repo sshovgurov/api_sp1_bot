@@ -26,14 +26,15 @@ def parse_homework_status(homework):
     if status == 'rejected':
         verdict = 'К сожалению в работе нашлись ошибки.'
     else:
-        verdict='Ревьюеру всё понравилось, можно приступать к следующему уроку.'
+        verdict = ('Ревьюеру всё понравилось, ' 
+        'можно приступать к следующему уроку.')
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
 
 def get_homework_statuses(current_date):
     headers = {'Authorization': f'OAuth {TELEGRAM_TOKEN}'}
     params = {'from_date': current_date}
-    homework_statuses = requests.get(API,headers=headers,params=params)
+    homework_statuses = requests.get(API, headers=headers, params=params)
     return homework_statuses.json()
 
 
@@ -51,7 +52,7 @@ def main():
                 send_message(parse_homework_status(
                     new_homework.get('homeworks')[0])
                 )
-            current_timestamp = new_homework.get('current_date', 
+            current_timestamp = new_homework.get('current_date',
                                                  current_timestamp)
             time.sleep(300)  # опрашивать раз в пять минут
 
