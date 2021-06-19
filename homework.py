@@ -23,12 +23,13 @@ bot = Bot(token=TELEGRAM_TOKEN)
 time_constant1 = 300
 time_constant2 = 15
 
+
 def parse_homework_status(homework):
     status = homework.get('status')
     homework_name = homework.get('homework_name')
     if status == 'rejected':
         verdict = 'К сожалению в работе нашлись ошибки.'
-    elif status == 'approved': 
+    elif status == 'approved':
         verdict = ('Ревьюеру всё понравилось, '
                    'можно приступать к следующему уроку.')
     else:
@@ -48,7 +49,6 @@ def get_homework_statuses(current_date):
         return homework_statuses.json()
     except HTTPError:
         logging.error("Невалидный JSON")
-
 
 
 def send_message(message, bot_client):
