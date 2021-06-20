@@ -2,9 +2,9 @@ import logging
 import os
 import time
 
-import requests, json
+import requests
+import json
 from dotenv import load_dotenv
-from requests.models import HTTPError
 from telegram import Bot
 
 load_dotenv()
