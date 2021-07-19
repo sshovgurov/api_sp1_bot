@@ -38,7 +38,7 @@ def parse_homework_status(homework):
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
 
-def get_homework_statuses(current_date):
+def get_homeworks(current_date):
     headers = {'Authorization': f'OAuth {TELEGRAM_TOKEN}'}
     params = {'from_date': current_date}
     try:
@@ -52,7 +52,7 @@ def get_homework_statuses(current_date):
         logging.error("Невалидный JSON")
 
 
-def send_message(message, bot):
+def send_message(message):
     return bot.send_message(chat_id=CHAT_ID, text=message)
 
 
