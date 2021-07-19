@@ -52,8 +52,8 @@ def get_homework_statuses(current_date):
         logging.error("Невалидный JSON")
 
 
-def send_message(message, bot_client):
-    return bot_client.send_message(chat_id=CHAT_ID, text=message)
+def send_message(message, bot):
+    return bot.send_message(chat_id=CHAT_ID, text=message)
 
 
 def main():
