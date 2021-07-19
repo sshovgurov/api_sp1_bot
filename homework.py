@@ -30,11 +30,9 @@ def parse_homework_status(homework):
     homework_name = homework.get('homework_name')
     if status == 'rejected':
         verdict = 'К сожалению в работе нашлись ошибки.'
-    elif status == 'approved':
+    else:
         verdict = ('Ревьюеру всё понравилось, '
-                   'можно приступать к следующему уроку.')
-    elif status == 'reviewing':
-        verdict = 'работа взята в ревью'
+                   'работа зачтена!')
     return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
 
