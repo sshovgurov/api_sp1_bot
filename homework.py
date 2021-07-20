@@ -28,7 +28,10 @@ SLEEP_TIME2 = 15
 def parse_homework_status(homework):
     status = homework.get('status')
     homework_name = homework.get('homework_name')
-    if status == 'rejected':
+    if homework_name is None or status is None:
+        logger.warning('Проблема с запросом API')
+        return 'Проблема с запросом API'
+    elif status == 'rejected':
         verdict = 'К сожалению, в работе нашлись ошибки.'
     elif status == 'approved':
         verdict = 'Ревьюеру всё понравилось, работа зачтена!'
@@ -37,12 +40,14 @@ def parse_homework_status(homework):
 
 def get_homeworks(current_date):
     headers = {'Authorization': f'OAuth {TELEGRAM_TOKEN}'}
+    if current_date is None:
+        current_date = int(time.time())
     params = {'from_date': current_date}
     try:
         homework_statuses = requests.get(API, headers=headers, params=params)
     except requests.RequestException as error:
         logging.error(error)
-
+        raise Exception('Бот столкнулся с ошибкой')
     try:
         return homework_statuses.json()
     except json.JSONDecodeError:
@@ -68,7 +73,8 @@ def main():
             time.sleep(SLEEP_TIME1)  # опрашивать раз в пять минут
 
         except Exception as e:
-            logger.error(f'Бот столкнулся с ошибкой: {e}')
+            logging.error(f'Бот столкнулся с ошибкой: {e}')
+            send_message(f'Бот столкнулся с ошибкой: {e}')
             time.sleep(SLEEP_TIME2)
 
 
